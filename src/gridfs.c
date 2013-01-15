@@ -592,7 +592,8 @@ MONGO_EXPORT void gridfile_get_chunk( gridfile *gfile, int n, bson* out ) {
 
 MONGO_EXPORT mongo_cursor *gridfile_get_chunks( gridfile *gfile, int start, int size ) {
     bson_iterator it;
-    bson_oid_t id;
+/*    bson_oid_t id; */
+    const char *id;
     bson gte;
     bson query;
     bson orderby;
@@ -600,10 +601,12 @@ MONGO_EXPORT mongo_cursor *gridfile_get_chunks( gridfile *gfile, int start, int 
     mongo_cursor *cursor;
 
     bson_find( &it, gfile->meta, "_id" );
-    id = *bson_iterator_oid( &it );
+/*    id = *bson_iterator_oid( &it ); */
+    id = bson_iterator_string( &it );
 
     bson_init( &query );
-    bson_append_oid( &query, "files_id", &id );
+/*    bson_append_oid( &query, "files_id", &id ); */
+    bson_append_string( &query, "files_id", id );
     if ( size == 1 ) {
         bson_append_int( &query, "n", start );
     }
