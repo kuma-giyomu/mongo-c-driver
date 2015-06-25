@@ -682,7 +682,7 @@ MONGO_EXPORT gridfs_offset gridfile_read( gridfile *gfile, gridfs_offset size, c
     total_chunks = last_chunk - first_chunk + 1;
     chunks = gridfile_get_chunks( gfile, first_chunk, total_chunks );
 
-    for ( i = 0; i < total_chunks; i++ ) {
+    for ( i = 0; (unsigned int) i < total_chunks; i++ ) {
         mongo_cursor_next( chunks );
         chunk = chunks->current;
         bson_find( &it, &chunk, "data" );

@@ -920,7 +920,7 @@ MONGO_EXPORT int mongo_insert_batch( mongo *conn, const char *ns,
             return MONGO_ERROR;
     }
 
-    if( ( size - overhead ) > conn->max_bson_size ) {
+    if( ( size - overhead ) > (unsigned int) conn->max_bson_size ) {
         conn->err = MONGO_BSON_TOO_LARGE;
         return MONGO_ERROR;
     }
